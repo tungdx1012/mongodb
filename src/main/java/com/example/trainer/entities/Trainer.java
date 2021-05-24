@@ -1,42 +1,46 @@
 package com.example.trainer.entities;
 
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table(name = "trainer")
+@Document(collection = "trainer")
 public class Trainer implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private Integer account_id;
+    private String id;
+
+    @Field(name = "account_id")
+    private String account_id;
+    @Field(name = "name")
     private String name;
 
     public Trainer() {
     }
 
-    public Trainer(Integer id, Integer account_id, String name) {
+    public Trainer(String id, String account_id, String name) {
         this.id = id;
         this.account_id = account_id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getAccount_id() {
+    public String getAccount_id() {
         return account_id;
     }
 
-    public void setAccount_id(Integer account_id) {
+    public void setAccount_id(String account_id) {
         this.account_id = account_id;
     }
 

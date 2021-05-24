@@ -7,13 +7,13 @@ import org.springframework.beans.BeanUtils;
 import java.util.List;
 
 
-public class TrainerRespone {
+public class TrainerResponse {
     private String id;
     private String account_id;
     private String name;
     private List<HorseResponse> listHorse;
 
-    public TrainerRespone(String id, String account_id, String name) {
+    public TrainerResponse(String id, String account_id, String name) {
         this.id = id;
         this.account_id = account_id;
         this.name = name;
@@ -27,7 +27,7 @@ public class TrainerRespone {
         this.listHorse = listHorse;
     }
 
-    public TrainerRespone(Trainer trainer) {
+    public TrainerResponse(Trainer trainer) {
         BeanUtils.copyProperties(trainer, this);
     }
 

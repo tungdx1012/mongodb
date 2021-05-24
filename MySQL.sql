@@ -61,7 +61,7 @@ insert into horse_account value(null,6,3,0);
 select * from account;
 
 -- join,inner join, left join
-select a.id, t.name, ha.horse_id, a.username, a.passwordflyway_schema_history, h.foaled, a.status, ha.archive 
+select a.id, t.name, ha.horse_id, a.username, a.password, h.foaled, a.status, ha.archive
 from account a inner 
 join trainer t on a.id = t.account_id 
 join horse_account ha on a.id = ha.account_id 
@@ -87,9 +87,9 @@ delete from horse_account where id = 12;
 
 -- Ex1 : Find trainer has 3 horse
 select t.id, t.name, a.username, a.password
-from trainer t join account a on t.account_id=a.id 
-join horse_account ha on ha.account_id= a.id 
-join horse h on h.id=ha.horse_id 
+from trainer t join account a on t.account_id = a.id 
+join horse_account ha on ha.account_id = a.id 
+join horse h on h.id = ha.horse_id 
 group by ha.account_id having count(ha.horse_id) > 2;
 
 -- Find horse duplicate
@@ -126,7 +126,7 @@ select h.id, h.name, h.foaled
 from trainer t join account a on t.account_id=a.id 
 join horse_account ha on ha.account_id= a.id 	
 join horse h on h.id=ha.horse_id
-where t.id = 10 and Year(h.foaled) = 2010;
+where t.id = 5 and Year(h.foaled) = 2010;
 
 -- select * from account where id = (select id from account where username = 'se');
 

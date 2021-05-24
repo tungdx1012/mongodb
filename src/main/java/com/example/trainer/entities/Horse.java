@@ -1,34 +1,34 @@
 package com.example.trainer.entities;
 
 
-import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Data
-@Table(name = "horse")
+@Document(collection = "horse")
 public class Horse implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-    @Column(name = "name")
+    private String id;
+    @Field(name = "name")
     private String name;
-    @Column(name = "foaled")
+    @Field(name = "foaled")
     private Date foaled;
+    @Field("trainerIds")
+    private Set<String> trainerIds = new HashSet<>();
 
-//    @OneToMany(mappedBy="horse")
-//    private Set<Trainer> trainer;
+    public Horse() {
+    }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -48,12 +48,11 @@ public class Horse implements Serializable {
         this.foaled = foaled;
     }
 
-    @Override
-    public String toString() {
-        return "Horse{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", foaled=" + foaled +
-                '}';
+    public Set<String> getTrainerIds() {
+        return trainerIds;
+    }
+
+    public void setTrainerIds(Set<String> trainerIds) {
+        this.trainerIds = trainerIds;
     }
 }

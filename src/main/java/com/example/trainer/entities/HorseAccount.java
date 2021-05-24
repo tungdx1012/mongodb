@@ -1,15 +1,13 @@
 package com.example.trainer.entities;
 
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "horse_account")
+@Document(collection = "horse_account")
 public class HorseAccount implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer horse_id;
     private Integer account_id;

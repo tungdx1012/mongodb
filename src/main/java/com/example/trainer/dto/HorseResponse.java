@@ -1,33 +1,56 @@
 package com.example.trainer.dto;
 
 import com.example.trainer.entities.Horse;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
-import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@Data
-@NoArgsConstructor
 public class HorseResponse {
-    private Integer id;
+    private String id;
     private String name;
     private Date foaled;
+    private List<TrainerResponse> trainers = new ArrayList<>();
 
-    public HorseResponse(String name, Date foaled) {
+    public List<TrainerResponse> getTrainers() {
+        return trainers;
+    }
+
+    public void setTrainers(List<TrainerResponse> trainers) {
+        this.trainers = trainers;
+    }
+
+    public HorseResponse(String id, String name, Date foaled) {
+        this.id = id;
         this.name = name;
         this.foaled = foaled;
     }
-
     public HorseResponse(Horse horse) {
-        this.id = horse.getId();
-        this.name = horse.getName();
-        this.foaled = horse.getFoaled();
+        BeanUtils.copyProperties(horse, this);
     }
-    public HorseResponse(Integer id, String name, Date foaled) {
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getFoaled() {
+        return foaled;
+    }
+
+    public void setFoaled(Date foaled) {
         this.foaled = foaled;
     }
 }

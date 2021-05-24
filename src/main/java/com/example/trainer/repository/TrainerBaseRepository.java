@@ -1,4 +1,9 @@
 package com.example.trainer.repository;
 
-public class TrainerBaseRepository {
+import com.example.trainer.entities.Trainer;
+
+import java.util.List;
+
+public interface TrainerBaseRepository {
+    List<Trainer> findTrainerByHorse();
 }

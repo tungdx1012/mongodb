@@ -1,11 +1,15 @@
 package com.example.trainer.controller;
 
 import com.example.trainer.ApiConst;
+import com.example.trainer.dto.HorseFilter;
 import com.example.trainer.dto.HorseRequest;
 import com.example.trainer.dto.HorseResponse;
 import com.example.trainer.entities.Horse;
+import com.example.trainer.repository.HorseRepository;
 import com.example.trainer.service.HorseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +21,24 @@ import java.util.List;
 public class HorseController {
     @Autowired
     HorseServiceImpl horseServiceImpl;
-//    HorseRepository horseRepository;
 
     // Get All Horses
     @GetMapping(ApiConst.GET_ALL)
-    public List<Horse> getAllHorses() {
+    public Object getAllHorses() {
         return horseServiceImpl.getAllHorses();
     }
 
-//    // Get : Filter by Trainer_ID and Year
+    @GetMapping("duphorse")
+    public Object dupHorse() {
+        return horseServiceImpl.findDuplicateHorseAndTrainer();
+    }
+
+//     Get : Filter by Trainer_ID and Year
     @GetMapping(ApiConst.HORSE)
     @ResponseBody
-    public Object getHorseByIDandYear(@RequestParam(value = "trainerId",required = false) Integer trainerId,
-                                      @RequestParam(value = "foaled",required = false) Integer foaled) {
-        return horseServiceImpl.findByIDandFoaled(trainerId, foaled);
+    public ResponseEntity<List<Horse>> getHorseByIdAndYear(HorseFilter request) {
+        List<Horse> response = horseServiceImpl.findByIdAndFoaled(request);
+        return new ResponseEntity<>(response, new HttpHeaders() ,HttpStatus.OK);
     }
 
     // Create a new Horse
@@ -41,14 +49,15 @@ public class HorseController {
 
     // Update a Trainer
     @PutMapping(ApiConst.HORSE)
-    public HorseResponse updateHorse(@RequestParam(value = "id") Integer id,
+    public HorseResponse updateHorse(@RequestParam(value = "id") String id,
                                      @RequestBody Horse horseDetails) {
         return horseServiceImpl.updateHorse(id, horseDetails);
     }
 
+
     // Delete a Horse
     @DeleteMapping(ApiConst.HORSE)
-    public ResponseEntity<?> deleteHorse(@RequestParam(value = "id") Integer Id) {
+    public ResponseEntity<?> deleteHorse(@RequestParam(value = "id") String Id) {
         return horseServiceImpl.deleteHorse(Id);
     }
 }
